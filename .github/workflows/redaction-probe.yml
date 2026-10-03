@@ -1,23 +1,16 @@
 name: redaction-probe
-on: [push, workflow_dispatch]
+on: workflow_dispatch
 jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: direct-echo
+      - name: direct
         run: echo "direct: ${{ secrets.PROBE_SECRET }}"
-      - name: env-var
-        run: echo "envvar: $PROBE_SECRET"
+      - name: envvar
+        run: echo "envvar: $S"
         env:
           S: ${{ secrets.PROBE_SECRET }}
-      - name: env-file
-        run: |
-          echo "S=$S" >> $GITHUB_ENV
-        env:
-          S: ${{ secrets.PROBE_SECRET }}
-      - name: env-indirect
-        run: echo "indirect: $S"
-      - name: multiline-wrap
-        run: echo "multi: X${S}Y"
+      - name: indirect
+        run: echo "indirect: X${S}Y"
         env:
           S: ${{ secrets.PROBE_SECRET }}
